@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_DB: techsoft_db
+      POSTGRES_USER: techsoft_user
+      POSTGRES_PASSWORD: techsoft_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+
+  mongodb:
+    build:
+      context: ./mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
+  mongodb_data:
